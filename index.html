@@ -272,6 +272,26 @@
 
         /* === ПОРТФОЛИО === */
         .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; }
+
+/* Раскладка: вертикал | 2 горизонтальных стопкой | вертикал */
+@media (min-width: 900px) {
+    .portfolio-grid {
+        grid-template-columns: 1fr 1.4fr 1fr;
+        grid-auto-flow: row;
+    }
+    .portfolio-card.tall-left {
+        grid-column: 1;
+        grid-row: 1 / span 2;
+    }
+    .portfolio-card.tall-right {
+        grid-column: 3;
+        grid-row: 1 / span 2;
+    }
+    /* Вертикальные видео — пропорция 9:16 */
+    .portfolio-card.vertical .portfolio-video {
+        aspect-ratio: 9/16;
+    }
+}
         .portfolio-card {
             background: var(--card-bg); border: 1px solid var(--border);
             border-radius: 20px; overflow: hidden; transition: all 0.4s ease;
@@ -522,49 +542,68 @@
     </div>
     <div class="portfolio-grid">
 
-        <!-- ВИДЕО 1 -->
-<div class="portfolio-card reveal reveal-delay-2">
-    <div class="portfolio-video">
-        <video width="100%" controls muted loop playsinline preload="metadata">
-            <source src="assets/Videos/MaleevaSize.mp4" type="video/mp4">
-            Ваш браузер не поддерживает видео.
-        </video>
-    </div>
-    <div class="portfolio-info">
-        <span class="tag">AI-ролик</span>
-        <h3>Ролик для бренда зеркал «Maleeva Glass Design»</h3>
-        <p>Короткий сюжетный ролик Reels. Три зеркала — три истории рождения из водной стихии.</p>
-    </div>
-</div>
-<!-- ВИДЕО 2 -->
-        <div class="portfolio-card reveal reveal-delay-1">
-            <div class="portfolio-video">
-    <iframe src="https://vk.com/video_ext.php?oid=39556354&id=456239392" 
-    width="100%" height="100%" 
-    style="background-color: #000" 
-    allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" 
-    frameborder="0" allowfullscreen></iframe> </div>
-            <div class="portfolio-info">
-                <span class="tag">AI-клип</span>
-                <h3>Клип «Я приду»</h3>
-                <p>Сюжетный широкоформатный ролик на социальную тему для компании «MCW-PRO Technology»</p>
-            </div>
+    <!-- ВИДЕО 1 (вертикальное, слева) -->
+    <div class="portfolio-card reveal reveal-delay-1 vertical tall-left">
+        <div class="portfolio-video">
+            <video width="100%" controls muted loop playsinline preload="metadata">
+                <source src="assets/Videos/MaleevaSize.mp4" type="video/mp4">
+                Ваш браузер не поддерживает видео.
+            </video>
         </div>
-        <!-- ВИДЕО 3 -->
-        <div class="portfolio-card reveal reveal-delay-3 vertical">
-            <div class="portfolio-video">
-    <video width="100%" controls muted loop playsinline preload="metadata">
-            <source src="assets/Videos/NaDachuSize.mp4" type="video/mp4">
-            Ваш браузер не поддерживает видео.
-        </video> </div>
-            <div class="portfolio-info">
-                <span class="tag">AI-ролик</span>
-                <h3>Залетел на 50к просмотров</h3>
-                <p>Сюжетный ролик на тему ностальгии, который собрал 50 тысяч просмотров в *запрещенной социальной сети</p>
-            </div>
+        <div class="portfolio-info">
+            <span class="tag">AI-ролик</span>
+            <h3>Ролик для бренда зеркал «Maleeva Glass Design»</h3>
+            <p>Короткий сюжетный ролик Reels. Три зеркала — три истории рождения из водной стихии.</p>
         </div>
+    </div>
 
+    <!-- ВИДЕО 2 (горизонтальное, центр сверху) -->
+    <div class="portfolio-card reveal reveal-delay-2">
+        <div class="portfolio-video">
+            <iframe src="https://vk.com/video_ext.php?oid=39556354&id=456239392" 
+                width="100%" height="100%" 
+                style="background-color: #000" 
+                allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" 
+                frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="portfolio-info">
+            <span class="tag">AI-клип</span>
+            <h3>Клип «Я приду»</h3>
+            <p>Сюжетный широкоформатный ролик на социальную тему для компании «MCW-PRO Technology»</p>
+        </div>
     </div>
+
+    <!-- ВИДЕО 3 (вертикальное, справа) -->
+    <div class="portfolio-card reveal reveal-delay-3 vertical tall-right">
+        <div class="portfolio-video">
+            <video width="100%" controls muted loop playsinline preload="metadata">
+                <source src="assets/Videos/NaDachuSize.mp4" type="video/mp4">
+                Ваш браузер не поддерживает видео.
+            </video>
+        </div>
+        <div class="portfolio-info">
+            <span class="tag">AI-ролик</span>
+            <h3>Залетел на 50к просмотров</h3>
+            <p>Сюжетный ролик на тему ностальгии, который собрал 50 тысяч просмотров в *запрещенной социальной сети</p>
+        </div>
+    </div>
+
+    <!-- ВИДЕО 4 (горизонтальное, центр снизу) — НОВОЕ -->
+    <div class="portfolio-card reveal reveal-delay-4">
+        <div class="portfolio-video">
+            <video width="100%" controls muted loop playsinline preload="metadata">
+                <source src="assets/Videos/legosize.mp4" type="video/mp4">
+                Ваш браузер не поддерживает видео.
+            </video>
+        </div>
+        <div class="portfolio-info">
+            <span class="tag">AI-клип</span>
+            <h3>Клип LEGO - пенициллин</h3>
+            <p>Ролик про создание первого отечественного пенициллина для детского конкурса фонда «Талант и успех» (Сириус)</p>
+        </div>
+    </div>
+
+</div>
 </section>
 
 <div class="divider"></div>
