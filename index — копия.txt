@@ -393,14 +393,16 @@
 
         /* === MOBILE === */
         @media (max-width: 768px) {
-            nav { padding: 16px 20px; }
-            .nav-links {
-                display: none; position: fixed;
-                top: 0; left: 0; right: 0; bottom: 0;
-                background: rgba(10,10,11,0.98);
-                flex-direction: column; align-items: center;
-                justify-content: center; gap: 32px;
-            }
+    nav { padding: 16px 20px; }
+    .nav-links {
+        display: none; position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(10, 10, 11, 0.98);
+        backdrop-filter: blur(20px);
+        flex-direction: column; align-items: center;
+        justify-content: center; gap: 32px;
+        z-index: 999;
+    }
             .nav-links.open { display: flex; }
             .nav-links a { font-size: 1.4rem; }
             .burger { display: flex; }
@@ -504,11 +506,11 @@
         </div>
         <div class="hero-stats">
             <div class="stat">
-                <div class="stat-number">2</div>
+                <div class="stat-number">2,5</div>
                 <div class="stat-label">года опыта</div>
             </div>
             <div class="stat">
-                <div class="stat-number">100+</div>
+                <div class="stat-number">50+</div>
                 <div class="stat-label">завершённых проектов</div>
             </div>
         </div>
@@ -744,6 +746,14 @@
     <p>© 2025 AestheticAI | Roman Martynenko ✨</p>
 </footer>
 
+<!-- Кнопка "Наверх" -->
+<button id="scrollTopBtn" aria-label="Наверх">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="19" x2="12" y2="5"></line>
+        <polyline points="5 12 12 5 19 12"></polyline>
+    </svg>
+</button>
+
 <!-- СКРИПТЫ -->
 <script>
 
@@ -796,12 +806,5 @@ scrollTopBtn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 </script>
-<!-- Кнопка "Наверх" -->
-<button id="scrollTopBtn" aria-label="Наверх">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="12" y1="19" x2="12" y2="5"></line>
-        <polyline points="5 12 12 5 19 12"></polyline>
-    </svg>
-</button>
 </body>
 </html>
