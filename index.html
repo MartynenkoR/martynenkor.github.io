@@ -722,56 +722,82 @@
 
 /* === ОТЗЫВЫ === */
 .reviews-section {
-    padding: 80px 20px;
+    padding: 100px 20px;
     background: transparent;
-    text-align: center;
     overflow: hidden;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
-.reviews-section h2 {
-    font-size: 2.5rem;
+.reviews-section .section-header {
+    text-align: center;
     margin-bottom: 50px;
+}
+
+.reviews-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
     background: linear-gradient(135deg, #a855f7, #ec4899);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
-.reviews-container {
+.reviews-subtitle {
+    color: var(--text2);
+    font-size: 1.05rem;
+    max-width: 600px;
+    margin: 0 auto;
+    font-weight: 300;
+}
+
+/* Контейнер с прокруткой */
+.reviews-scroll {
     display: flex;
     gap: 24px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
-    padding: 20px 10px 30px;
+    padding: 30px 40px;
     cursor: grab;
     scrollbar-width: none;
+    scroll-behavior: smooth;
 }
 
-.reviews-container::-webkit-scrollbar {
+.reviews-scroll::-webkit-scrollbar {
     display: none;
 }
 
-.reviews-container.active {
+.reviews-scroll.dragging {
     cursor: grabbing;
+    scroll-behavior: auto;
 }
 
+.reviews-scroll.dragging .review-card {
+    pointer-events: none;
+}
+
+/* Карточка отзыва */
 .review-card {
     flex: 0 0 auto;
-    width: 320px;
+    width: 340px;
     scroll-snap-align: center;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(168, 85, 247, 0.2);
     border-radius: 20px;
-    padding: 12px;
+    padding: 14px;
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     user-select: none;
+    cursor: pointer;
 }
 
 .review-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-6px);
     border-color: rgba(168, 85, 247, 0.5);
-    box-shadow: 0 10px 30px rgba(168, 85, 247, 0.2);
+    box-shadow: 0 15px 40px rgba(168, 85, 247, 0.25);
 }
 
 .review-img {
@@ -779,8 +805,23 @@
     height: auto;
     border-radius: 14px;
     display: block;
-    pointer-events: auto;
     -webkit-user-drag: none;
+    user-select: none;
+    pointer-events: none;
+}
+
+/* Подсказка для пользователя */
+.reviews-hint {
+    text-align: center;
+    color: var(--text3);
+    font-size: 0.85rem;
+    margin-top: 16px;
+    opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+    .review-card { width: 280px; }
+    .reviews-scroll { padding: 20px 20px; gap: 16px; }
 }
 
 /* === ЛАЙТБОКС === */
@@ -1077,31 +1118,24 @@
 </div>
 <!-- === СЕКЦИЯ ОТЗЫВОВ === -->
 <section class="reviews-section" id="reviews">
-  <div class="reviews-container">
-    <h2 class="reviews-title">Отзывы клиентов</h2>
-    <p class="reviews-subtitle">Что говорят о нашей работе</p>
-    
-    <div class="reviews-marquee">
-      <div class="reviews-track">
-        <img src="assets/Images/review1.png" alt="Отзыв 1" class="review-img">
-        <img src="assets/Images/review2.png" alt="Отзыв 2" class="review-img">
-        <img src="assets/Images/review3.png" alt="Отзыв 3" class="review-img">
-        <img src="assets/Images/review4.png" alt="Отзыв 4" class="review-img">
-        <img src="assets/Images/review5.png" alt="Отзыв 5" class="review-img">
-        <img src="assets/Images/review6.png" alt="Отзыв 6" class="review-img">
-        <img src="assets/Images/review7.png" alt="Отзыв 7" class="review-img">
-        <!-- Дубликат для бесшовной прокрутки -->
-        <img src="assets/Images/review1.png" alt="Отзыв 1" class="review-img">
-        <img src="assets/Images/review2.png" alt="Отзыв 2" class="review-img">
-        <img src="assets/Images/review3.png" alt="Отзыв 3" class="review-img">
-        <img src="assets/Images/review4.png" alt="Отзыв 4" class="review-img">
-        <img src="assets/Images/review5.png" alt="Отзыв 5" class="review-img">
-        <img src="assets/Images/review6.png" alt="Отзыв 6" class="review-img">
-        <img src="assets/Images/review7.png" alt="Отзыв 7" class="review-img">
-      </div>
+    <div class="section-header reveal">
+        <div class="section-label">Отзывы</div>
     </div>
-  </div>
+    
+    <div class="reviews-scroll" id="reviewsScroll">
+        <div class="review-card"><img src="assets/Images/review1.png" alt="Отзыв 1" class="review-img"></div>
+        <div class="review-card"><img src="assets/Images/review2.png" alt="Отзыв 2" class="review-img"></div>
+        <div class="review-card"><img src="assets/Images/review3.png" alt="Отзыв 3" class="review-img"></div>
+        <div class="review-card"><img src="assets/Images/review4.png" alt="Отзыв 4" class="review-img"></div>
+        <div class="review-card"><img src="assets/Images/review5.png" alt="Отзыв 5" class="review-img"></div>
+        <div class="review-card"><img src="assets/Images/review6.png" alt="Отзыв 6" class="review-img"></div>
+        <div class="review-card"><img src="assets/Images/review7.png" alt="Отзыв 7" class="review-img"></div>
+    </div>
+    
+    <p class="reviews-hint">← Потяните, чтобы посмотреть все отзывы →</p>
 </section>
+
+<div class="divider"></div>
 <!-- ФОРМАТЫ РАБОТЫ -->
 <section id="pricing">
     <div class="section-header reveal">
@@ -1241,34 +1275,7 @@
         </a>
     </div>
 </section>
-<!-- === СЕКЦИЯ ОТЗЫВОВ === -->
-<section class="reviews-section" id="reviews">
-  <div class="reviews-container">
-    <h2 class="reviews-title">Отзывы клиентов</h2>
-    <p class="reviews-subtitle">Что говорят о нашей работе</p>
-    
-    <div class="reviews-marquee">
-      <div class="reviews-track">
-        <!-- Первый набор -->
-        <img src="assets/Images/review1.png" alt="Отзыв 1" class="review-img">
-        <img src="assets/Images/review2.png" alt="Отзыв 2" class="review-img">
-        <img src="assets/Images/review3.png" alt="Отзыв 3" class="review-img">
-        <img src="assets/Images/review4.png" alt="Отзыв 4" class="review-img">
-        <img src="assets/Images/review5.png" alt="Отзыв 5" class="review-img">
-        <img src="assets/Images/review6.png" alt="Отзыв 6" class="review-img">
-        <img src="assets/Images/review7.png" alt="Отзыв 7" class="review-img">
-        <!-- Дубликат для бесшовной прокрутки -->
-        <img src="assets/Images/review1.png" alt="Отзыв 1" class="review-img">
-        <img src="assets/Images/review2.png" alt="Отзыв 2" class="review-img">
-        <img src="assets/Images/review3.png" alt="Отзыв 3" class="review-img">
-        <img src="assets/Images/review4.png" alt="Отзыв 4" class="review-img">
-        <img src="assets/Images/review5.png" alt="Отзыв 5" class="review-img">
-        <img src="assets/Images/review6.png" alt="Отзыв 6" class="review-img">
-        <img src="assets/Images/review7.png" alt="Отзыв 7" class="review-img">
-      </div>
-    </div>
-  </div>
-</section>
+
 <!-- FOOTER -->
 <footer>
     <p>© 2025 AestheticAI | Roman Martynenko ✨</p>
@@ -1366,53 +1373,69 @@ scrollTopBtn.addEventListener('click', () => {
 });
 </script>
 <script>
+// === ИНТЕРАКТИВНАЯ ПРОКРУТКА ОТЗЫВОВ ===
+const reviewsScroll = document.getElementById('reviewsScroll');
 
-    // Прокрутка отзывов мышкой (drag-to-scroll)
-const reviewsContainer = document.querySelector('.reviews-container');
-if (reviewsContainer) {
+if (reviewsScroll) {
     let isDown = false;
     let startX;
     let scrollLeft;
+    let hasMoved = false;
 
-    reviewsContainer.addEventListener('mousedown', (e) => {
+    // Мышка
+    reviewsScroll.addEventListener('mousedown', (e) => {
         isDown = true;
-        reviewsContainer.classList.add('active');
-        startX = e.pageX - reviewsContainer.offsetLeft;
-        scrollLeft = reviewsContainer.scrollLeft;
+        hasMoved = false;
+        reviewsScroll.classList.add('dragging');
+        startX = e.pageX - reviewsScroll.offsetLeft;
+        scrollLeft = reviewsScroll.scrollLeft;
     });
 
-    reviewsContainer.addEventListener('mouseleave', () => {
+    reviewsScroll.addEventListener('mouseleave', () => {
         isDown = false;
-        reviewsContainer.classList.remove('active');
+        reviewsScroll.classList.remove('dragging');
     });
 
-    reviewsContainer.addEventListener('mouseup', () => {
+    reviewsScroll.addEventListener('mouseup', () => {
         isDown = false;
-        reviewsContainer.classList.remove('active');
+        reviewsScroll.classList.remove('dragging');
     });
 
-    reviewsContainer.addEventListener('mousemove', (e) => {
+    reviewsScroll.addEventListener('mousemove', (e) => {
         if (!isDown) return;
         e.preventDefault();
-        const x = e.pageX - reviewsContainer.offsetLeft;
+        hasMoved = true;
+        const x = e.pageX - reviewsScroll.offsetLeft;
         const walk = (x - startX) * 2;
-        reviewsContainer.scrollLeft = scrollLeft - walk;
+        reviewsScroll.scrollLeft = scrollLeft - walk;
     });
-}
 
-    // Открытие отзыва на весь экран при клике
-    document.querySelectorAll('.review-img').forEach(img => {
-        img.addEventListener('click', function() {
+    // Клик по карточке = открыть на весь экран (если не было драга)
+    reviewsScroll.querySelectorAll('.review-card').forEach(card => {
+        card.addEventListener('click', function(e) {
+            if (hasMoved) {
+                e.preventDefault();
+                return;
+            }
+            const img = this.querySelector('img');
+            if (!img) return;
             const lightbox = document.getElementById('lightbox');
             const lightboxImg = document.getElementById('lightbox-img');
-            lightboxImg.src = this.src;
+            lightboxImg.src = img.src;
+            lightboxImg.alt = img.alt;
             lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
         });
     });
 
-    function closeLightbox() {
-        document.getElementById('lightbox').classList.remove('active');
-    }
+    // Колесо мыши = горизонтальная прокрутка
+    reviewsScroll.addEventListener('wheel', (e) => {
+        if (e.deltaY !== 0) {
+            e.preventDefault();
+            reviewsScroll.scrollLeft += e.deltaY;
+        }
+    }, { passive: false });
+}
 </script>
 </body>
 </html>
