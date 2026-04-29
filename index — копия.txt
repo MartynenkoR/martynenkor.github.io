@@ -938,8 +938,8 @@
 <body>
 
 <!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox">
-    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="event.stopPropagation(); closeLightbox()">✕</button>
     <img id="lightbox-img" src="" alt="">
 </div>
 
@@ -1190,11 +1190,6 @@
     </div>
 </section>
 
-<!-- Лайтбокс для увеличения отзыва -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
-    <span class="lightbox-close">&times;</span>
-    <img class="lightbox-img" id="lightbox-img" alt="Увеличенный отзыв">
-</div>
 <!-- === СЕКЦИЯ ОТЗЫВОВ === -->
 <section class="reviews-section" id="reviews">
     <div class="section-header reveal">

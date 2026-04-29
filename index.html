@@ -886,7 +886,7 @@
     display: block;
     -webkit-user-drag: none;
     user-select: none;
-    pointer-events: none;
+    pointer-events: auto;
 }
 
 /* Подсказка для пользователя */
@@ -1453,50 +1453,56 @@ const reviewsScroll = document.getElementById('reviewsScroll');
 
 if (reviewsScroll) {
     let isDown = false;
-    let startX;
-    let scrollLeft;
+    let startX = 0;
+    let startY = 0;
+    let scrollLeft = 0;
     let hasMoved = false;
 
-    // Мышка
     reviewsScroll.addEventListener('mousedown', (e) => {
         isDown = true;
         hasMoved = false;
-        reviewsScroll.classList.add('dragging');
-        startX = e.pageX - reviewsScroll.offsetLeft;
+        startX = e.pageX;
+        startY = e.pageY;
         scrollLeft = reviewsScroll.scrollLeft;
-    });
-
-    reviewsScroll.addEventListener('mouseleave', () => {
-        isDown = false;
-        reviewsScroll.classList.remove('dragging');
-    });
-
-    reviewsScroll.addEventListener('mouseup', () => {
-        isDown = false;
-        reviewsScroll.classList.remove('dragging');
     });
 
     reviewsScroll.addEventListener('mousemove', (e) => {
         if (!isDown) return;
-        e.preventDefault();
-        hasMoved = true;
-        const x = e.pageX - reviewsScroll.offsetLeft;
-        const walk = (x - startX) * 2;
-        reviewsScroll.scrollLeft = scrollLeft - walk;
+        const dx = Math.abs(e.pageX - startX);
+        const dy = Math.abs(e.pageY - startY);
+        if (dx > 5 || dy > 5) {
+            hasMoved = true;
+            reviewsScroll.classList.add('dragging');
+            reviewsScroll.scrollLeft = scrollLeft - (e.pageX - startX);
+            e.preventDefault();
+        }
     });
 
-            // Клик по карточке = открыть на весь экран
-        reviewsScroll.querySelectorAll('.review-card').forEach(card => {
-            card.style.cursor = 'pointer';
-            card.addEventListener('click', function(e) {
-                if (hasMoved) { e.preventDefault(); return; }
-                const img = this.querySelector('img');
-                if (!img) return;
-                document.getElementById('lightbox-img').src = img.src;
-                document.getElementById('lightbox').classList.add('active');
-                document.body.style.overflow = 'hidden';
-            });
+    const stopDrag = () => {
+        isDown = false;
+        reviewsScroll.classList.remove('dragging');
+    };
+    reviewsScroll.addEventListener('mouseup', stopDrag);
+    reviewsScroll.addEventListener('mouseleave', stopDrag);
+
+    // Клик по карточке = открыть на весь экран
+    reviewsScroll.querySelectorAll('.review-card').forEach(card => {
+        card.addEventListener('click', function(e) {
+            if (hasMoved) {
+                e.preventDefault();
+                e.stopPropagation();
+                return;
+            }
+            const img = this.querySelector('img');
+            if (!img) return;
+            const lb = document.getElementById('lightbox');
+            const lbImg = document.getElementById('lightbox-img');
+            lbImg.src = img.src;
+            lbImg.alt = img.alt || '';
+            lb.classList.add('active');
+            document.body.style.overflow = 'hidden';
         });
+    });
 
     // Колесо мыши = горизонтальная прокрутка
     reviewsScroll.addEventListener('wheel', (e) => {
