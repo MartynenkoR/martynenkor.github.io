@@ -682,70 +682,6 @@
         height: 46px;
     }
 }
-/* === БЛОК ОТЗЫВОВ === */
-.reviews-section {
-    padding: 80px 0;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-    overflow: hidden;
-}
-
-.reviews-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.reviews-title {
-    text-align: center;
-    color: #fff;
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-    font-weight: 700;
-}
-
-.reviews-subtitle {
-    text-align: center;
-    color: #aaa;
-    font-size: 1.1rem;
-    margin-bottom: 50px;
-}
-
-.reviews-marquee {
-    overflow: hidden;
-    position: relative;
-    -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
-            mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
-}
-
-.reviews-track {
-    display: flex;
-    gap: 25px;
-    width: max-content;
-    animation: scroll-reviews 60s linear infinite;
-}
-
-.reviews-marquee:hover .reviews-track {
-    animation-play-state: paused;
-}
-
-.review-img {
-    height: 280px;
-    width: auto;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-    cursor: pointer;
-    transition: transform 0.3s ease;
-    background: #fff;
-}
-
-.review-img:hover {
-    transform: scale(1.05);
-}
-
-@keyframes scroll-reviews {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-}
 
 /* Лайтбокс */
 .lightbox {
@@ -784,23 +720,6 @@
     user-select: none;
 }
 
-/* Адаптив под мобильные */
-@media (max-width: 768px) {
-    .reviews-title {
-        font-size: 1.8rem;
-    }
-    .reviews-subtitle {
-        font-size: 1rem;
-        margin-bottom: 30px;
-    }
-    .review-img {
-        height: 220px;
-    }
-    .reviews-track {
-        gap: 15px;
-        animation-duration: 45s;
-    }
-}
 /* === ОТЗЫВЫ === */
 .reviews-section {
     padding: 80px 20px;
