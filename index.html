@@ -401,25 +401,104 @@
         .gallery-item:hover .gallery-overlay { opacity: 1; }
         .gallery-overlay span { font-size: 0.9rem; font-weight: 500; }
 
-        /* === LIGHTBOX === */
-        .lightbox {
-            display: none; position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            z-index: 9999; background: rgba(0,0,0,0.95);
-            backdrop-filter: blur(20px);
-            align-items: center; justify-content: center;
-            padding: 40px; cursor: pointer;
-        }
-        .lightbox.active { display: flex; }
-        .lightbox img { max-width: 90%; max-height: 90vh; border-radius: 12px; }
-        .lightbox-close {
-            position: absolute; top: 24px; right: 24px;
-            width: 44px; height: 44px; border-radius: 50%;
-            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1);
-            color: white; font-size: 1.5rem;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer;
-        } 
+        /* === ЛАЙТБОКС (УЛУЧШЕННЫЙ) === */
+.lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    cursor: zoom-out;
+    overflow-y: auto;
+    backdrop-filter: blur(10px);
+}
+
+.lightbox.active {
+    display: flex;
+}
+
+.lightbox img {
+    max-width: 95%;
+    max-height: 95vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(168, 85, 247, 0.3);
+    animation: lightboxZoom 0.3s ease;
+}
+
+@keyframes lightboxZoom {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Кнопка закрытия */
+.lightbox::before {
+    content: '✕';
+    position: fixed;
+    top: 20px;
+    right: 30px;
+    font-size: 2rem;
+    color: white;
+    cursor: pointer;
+    z-index: 10000;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(168, 85, 247, 0.2);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.lightbox:hover::before {
+    background: rgba(168, 85, 247, 0.5);
+    transform: rotate(90deg);
+}
+
+/* Подсказка снизу */
+.lightbox::after {
+    content: 'Нажмите в любом месте, чтобы закрыть';
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+    pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .lightbox img {
+        max-width: 100%;
+        max-height: 90vh;
+        border-radius: 8px;
+    }
+    
+    .lightbox::after {
+        font-size: 0.75rem;
+        bottom: 10px;
+    }
+    
+    .lightbox::before {
+        top: 10px;
+        right: 15px;
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+    }
+}
 
         /* === ФОРМАТЫ РАБОТЫ (ТАРИФЫ) === */
         .pricing-grid {
@@ -1344,7 +1423,8 @@ document.addEventListener('keydown', (e) => {
 
         lightboxImg.src = img.src;
         lightboxImg.alt = img.alt;
-        lightbox.classList.add('active');
+        lightbox.classList.add('active'); 
+
         document.body.style.overflow = 'hidden';
     }
 
@@ -1410,23 +1490,18 @@ if (reviewsScroll) {
         reviewsScroll.scrollLeft = scrollLeft - walk;
     });
 
-    // Клик по карточке = открыть на весь экран (если не было драга)
-    reviewsScroll.querySelectorAll('.review-card').forEach(card => {
-        card.addEventListener('click', function(e) {
-            if (hasMoved) {
-                e.preventDefault();
-                return;
-            }
-            const img = this.querySelector('img');
-            if (!img) return;
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImg = document.getElementById('lightbox-img');
-            lightboxImg.src = img.src;
-            lightboxImg.alt = img.alt;
-            lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden';
+            // Клик по карточке = открыть на весь экран
+        reviewsScroll.querySelectorAll('.review-card').forEach(card => {
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', function(e) {
+                if (hasMoved) { e.preventDefault(); return; }
+                const img = this.querySelector('img');
+                if (!img) return;
+                document.getElementById('lightbox-img').src = img.src;
+                document.getElementById('lightbox').classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
         });
-    });
 
     // Колесо мыши = горизонтальная прокрутка
     reviewsScroll.addEventListener('wheel', (e) => {
