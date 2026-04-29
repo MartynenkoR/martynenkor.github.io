@@ -419,7 +419,8 @@
             color: white; font-size: 1.5rem;
             display: flex; align-items: center; justify-content: center;
             cursor: pointer;
-        }
+        } 
+
         /* === ФОРМАТЫ РАБОТЫ (ТАРИФЫ) === */
         .pricing-grid {
             display: grid;
@@ -681,6 +682,137 @@
         height: 46px;
     }
 }
+
+/* Лайтбокс */
+.lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    cursor: zoom-out;
+    padding: 20px;
+}
+
+.lightbox.active {
+    display: flex;
+}
+
+.lightbox-img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: #fff;
+    font-size: 50px;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* === ОТЗЫВЫ === */
+.reviews-section {
+    padding: 80px 20px;
+    background: transparent;
+    text-align: center;
+    overflow: hidden;
+}
+
+.reviews-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+    background: linear-gradient(135deg, #a855f7, #ec4899);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.reviews-container {
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 20px 10px 30px;
+    cursor: grab;
+    scrollbar-width: none;
+}
+
+.reviews-container::-webkit-scrollbar {
+    display: none;
+}
+
+.reviews-container.active {
+    cursor: grabbing;
+}
+
+.review-card {
+    flex: 0 0 auto;
+    width: 320px;
+    scroll-snap-align: center;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    border-radius: 20px;
+    padding: 12px;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    user-select: none;
+}
+
+.review-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(168, 85, 247, 0.5);
+    box-shadow: 0 10px 30px rgba(168, 85, 247, 0.2);
+}
+
+.review-img {
+    width: 100%;
+    height: auto;
+    border-radius: 14px;
+    display: block;
+    pointer-events: auto;
+    -webkit-user-drag: none;
+}
+
+/* === ЛАЙТБОКС === */
+.lightbox {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.92);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    cursor: zoom-out;
+}
+
+.lightbox.active {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+}
+
+.lightbox img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 12px;
+    box-shadow: 0 0 50px rgba(168, 85, 247, 0.4);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
     </style>
 </head>
 <body>
@@ -828,7 +960,8 @@
     <!-- ВИДЕО 1 (вертикальное, слева) -->
     <div class="portfolio-card reveal reveal-delay-1 vertical tall-left">
         <div class="portfolio-video">
-            <video width="100%" controls loop playsinline preload="metadata">
+            <video width="100%" controls loop playsinline preload="metadata"
+                poster="assets/Images/postermaleeva.png">
                 <source src="assets/Videos/MaleevaSize.mp4" type="video/mp4">
                 Ваш браузер не поддерживает видео.
             </video>
@@ -859,7 +992,8 @@
     <!-- ВИДЕО 3 (вертикальное, справа) -->
     <div class="portfolio-card reveal reveal-delay-3 vertical tall-right">
         <div class="portfolio-video">
-            <video width="100%" controls loop playsinline preload="metadata">
+            <video width="100%" controls loop playsinline preload="metadata"
+                poster="assets/Images/posternadachu.png">
                 <source src="assets/Videos/NaDachuSize.mp4" type="video/mp4">
                 Ваш браузер не поддерживает видео.
             </video>
@@ -874,7 +1008,8 @@
     <!-- ВИДЕО 4 (горизонтальное, центр снизу) — НОВОЕ -->
     <div class="portfolio-card reveal reveal-delay-4">
         <div class="portfolio-video">
-            <video width="100%" controls loop playsinline preload="metadata">
+            <video width="100%" controls loop playsinline preload="metadata"
+                poster="assets/Images/posterlego.png">
                 <source src="assets/Videos/legosize.mp4" type="video/mp4">
                 Ваш браузер не поддерживает видео.
             </video>
@@ -918,8 +1053,26 @@
             <div class="gallery-overlay"><span>Конкурс детских обложек, созданных с помощью AI</span></div>
         </div>
 
+        <!-- КАРТИНКА 4 -->
+        <div class="gallery-item reveal reveal-delay-3" onclick="openLightbox(this)">
+            <img src="assets/Images/1.jpeg" alt="Название работы" loading="lazy">
+            <div class="gallery-overlay"><span>Дизайн интерьера выставки для института им. Курчатова</span></div>
+        </div>
+
+        <!-- КАРТИНКА 5 -->
+        <div class="gallery-item reveal reveal-delay-2" onclick="openLightbox(this)">
+            <img src="assets/Images/bogatyri.jpeg" alt="Название работы" loading="lazy">
+            <div class="gallery-overlay"><span>Поздравление ко Дню защитника Отечества</span></div>
+        </div>
+
     </div>
 </section>
+
+<!-- Лайтбокс для увеличения отзыва -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <span class="lightbox-close">&times;</span>
+    <img class="lightbox-img" id="lightbox-img" alt="Увеличенный отзыв">
+</div>
 <!-- ФОРМАТЫ РАБОТЫ -->
 <section id="pricing">
     <div class="section-header reveal">
@@ -1155,6 +1308,55 @@ window.addEventListener('scroll', () => {
 scrollTopBtn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
+</script>
+<script>
+
+    // Прокрутка отзывов мышкой (drag-to-scroll)
+const reviewsContainer = document.querySelector('.reviews-container');
+if (reviewsContainer) {
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    reviewsContainer.addEventListener('mousedown', (e) => {
+        isDown = true;
+        reviewsContainer.classList.add('active');
+        startX = e.pageX - reviewsContainer.offsetLeft;
+        scrollLeft = reviewsContainer.scrollLeft;
+    });
+
+    reviewsContainer.addEventListener('mouseleave', () => {
+        isDown = false;
+        reviewsContainer.classList.remove('active');
+    });
+
+    reviewsContainer.addEventListener('mouseup', () => {
+        isDown = false;
+        reviewsContainer.classList.remove('active');
+    });
+
+    reviewsContainer.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - reviewsContainer.offsetLeft;
+        const walk = (x - startX) * 2;
+        reviewsContainer.scrollLeft = scrollLeft - walk;
+    });
+}
+
+    // Открытие отзыва на весь экран при клике
+    document.querySelectorAll('.review-img').forEach(img => {
+        img.addEventListener('click', function() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            lightboxImg.src = this.src;
+            lightbox.classList.add('active');
+        });
+    });
+
+    function closeLightbox() {
+        document.getElementById('lightbox').classList.remove('active');
+    }
 </script>
 </body>
 </html>
